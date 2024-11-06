@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Stylish Resume</title>
+</head>
+<body>
+
+  <div class="resume-container" id="resume">
+    <div class="header">
+      <h1>Daniyal Raza</h1>
+      <p>Web Developer | Graphic Designer | Programmer</p>
+    </div>
+
+    <div class="content">
+      <div class="section">
+        <h2>About Me</h2>
+        <p>
+          I'm a passionate developer with a strong foundation in HTML, CSS, and JavaScript. I enjoy solving problems and bringing ideas to life with clean and efficient code.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Skills</h2>
+        <div class="skills">
+          <div class="skill">HTML</div>
+          <div class="skill">CSS</div>
+          <div class="skill">JavaScript</div>
+          <div class="skill">React</div>
+          <div class="skill">Next.js</div>
+          <div class="skill">Graphic Design</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Experience</h2>
+        <p>
+          Customer Service Representative at MCS Digitizing, Retailer at Jazz 4G, Freelance Web Developer.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>Education</h2>
+        <p>
+          Matriculation in Computer Science from Dehli School, Sindh Board.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <button onclick="downloadResume()">Download Resume</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+  <script>
+    async function downloadResume() {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF();
+
+      const resumeElement = document.getElementById('resume');
+
+      if (!resumeElement) {
+        console.error('Resume element not found!');
+        return;
+      }
+
+      // Adding a delay to allow proper DOM rendering
+      html2canvas(resumeElement, {
+        logging: true, // Logs rendering for debugging
+        useCORS: true,  // Allow external images to be used in the canvas
+        allowTaint: true,
+        backgroundColor: "#fff",  // Set a white background for the PDF
+        scale: 2  // Increase scale for better image resolution
+      }).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+
+        // PDF dimensions
+        const imgWidth = 190;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+        pdf.save("Daniyal_Raza_Resume.pdf");
+      }).catch((error) => {
+        console.error("Error generating the canvas:", error);
+      });
+    }
+  </script>
+
+</body>
+</html>
