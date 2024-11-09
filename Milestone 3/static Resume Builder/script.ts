@@ -1,4 +1,4 @@
-// Define the types for the form elements
+// Select Elements 
 
 
 
@@ -12,19 +12,19 @@ interface ResumeFormElements extends HTMLFormElement  {
     education: HTMLTextAreaElement;
 }
 
-// Add event listener for form submission
+// Use Eventlistener
 document.getElementById('resumeForm')?.addEventListener('submit', function (event: Event) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault(); 
 
-    // Hide the form and show the generated resume
+    // display property use case
     const form = event.currentTarget as ResumeFormElements;
     form.style.display = 'none';
     document.getElementById('display')!.style.display = 'block';
 
-    // Show the download button
+    // show the download button
     document.getElementById('downloadBtn')!.style.display = 'block';
 
-    // Get the user's input
+    // user input
     const name: string = form.name.value;
     const email: string = form.email.value;
     const address: string = form.address.value;
@@ -34,7 +34,7 @@ document.getElementById('resumeForm')?.addEventListener('submit', function (even
     const education: string = form.education.value;
 
 
-    // Populate the left-side (Personal Information)
+    // left side information
     const leftSide = document.getElementById('left-side')!;
     leftSide.innerHTML = `
         <h1>${name}</h1>
@@ -43,10 +43,10 @@ document.getElementById('resumeForm')?.addEventListener('submit', function (even
         <p><strong>Address:</strong><br> ${address}</p>
     `;
 
-    // Populate the right-side (Experience and Skills)
+    // right side 
     const rightSide = document.getElementById('right-side')!;
 
-    // Convert experience and skills to list items
+    // expeirence, skill and education convert into list item
     const educationList = education.split("\n").map(item => `<li>${item}</li>`).join("");
     const skillsList = skills.split("\n").map(item => `<li>${item}</li>`).join("");
     const experienceList = experience.split("\n").map(item => `<li>${item}</li>`).join("");
@@ -67,22 +67,18 @@ document.getElementById('resumeForm')?.addEventListener('submit', function (even
 document.getElementById('downloadBtn')?.addEventListener('click', function () {
     const { jsPDF } = window.jspdf;
 
-    // Get the resume container
     const content = document.getElementById('display')!;
 
-    // Use html2canvas to capture the content and then generate the PDF
     html2canvas(content).then(function (canvas) {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('p', 'mm', 'a4');
-
-        // Add the image of the resume to the PDF
-        const imgWidth = 210; // A4 page width in mm
-        const pageHeight = 297; // A4 page height in mm
+        
+        const imgWidth = 210;
+        const pageHeight = 297;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
         pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
 
-        // Save the generated PDF
         pdf.save('resume.pdf');
     });
 });
