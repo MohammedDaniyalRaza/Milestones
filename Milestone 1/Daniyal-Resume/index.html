@@ -67,17 +67,17 @@
         return;
       }
 
-      // Adding a delay to allow proper DOM rendering
+      
       html2canvas(resumeElement, {
-        logging: true, // Logs rendering for debugging
-        useCORS: true,  // Allow external images to be used in the canvas
+        logging: true, 
+        useCORS: true,  
         allowTaint: true,
-        backgroundColor: "#fff",  // Set a white background for the PDF
-        scale: 2  // Increase scale for better image resolution
+        backgroundColor: "#fff",  
+        scale: 2  
       }).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
 
-        // PDF dimensions
+        // PDF
         const imgWidth = 190;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
